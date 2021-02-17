@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using Domain.ViewModel.Appointments;
 
 namespace Infra.Database.Implementations.EntityFramework.Repositories.AppointmentRepository
 {
@@ -43,13 +44,9 @@ namespace Infra.Database.Implementations.EntityFramework.Repositories.Appointmen
             return await query.FirstOrDefaultAsync<Appointment>() == null;
         }
 
-        public async Task<List<Appointment>> FindAvailableCar(DateTime initialDate, DateTime finalDate)
+        public async Task<List<SchedulesDayAvailable>> FindAppointmentByPeriod(DateTime initialDate, DateTime finalDate)
         {
-            var query = from a in _context.Appointments
-                where a.DateTimeExpectedCollected < initialDate
-                && a.DateTimeExpectedDelivery < finalDate
-                select a;
-            return await query.ToListAsync<Appointment>();
+            throw new NotImplementedException();
         }
     }
 }

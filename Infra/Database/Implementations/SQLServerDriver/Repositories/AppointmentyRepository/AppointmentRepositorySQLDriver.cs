@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Domain.ViewModel.Appointments;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,26 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.Appointmen
             return ap == null;
         }
 
-        public Task<List<Appointment>> FindAvailableCar(DateTime initialDate, DateTime finalDate)
+        public async Task<List<SchedulesDayAvailable>> FindAppointmentByPeriod(DateTime initialDate, DateTime finalDate)
         {
-            throw new NotImplementedException();
+            List<DbParameter> parameters = new List<DbParameter>
+            {
+                new SqlParameter("@initialDate", initialDate),
+                new SqlParameter("@finalDate", finalDate)
+            };
+            var queryString = "SELECT a.Id as IdAppointment, " +
+                "a.schedule as Schedule, " +
+                "b.name as NameClient, " +
+                "c.board as Board," +
+                "a.Amount as Amount," +
+                "a.DateTimeCollected as AppointmentCollected," +
+                "a.DateTimeDelivery as AppointmentDelivery" +
+                "  FROM appointments a " +
+                " inner join clients b on b.id = a.idclient " +
+                " inner join cars c on c.Id  = a.idCar " +
+                " where schedule between @initialDate and @finalDate;";
+            var ap = await FindList<SchedulesDayAvailable>(queryString, parameters);
+            return ap ;
         }
 
     }

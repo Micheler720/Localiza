@@ -14,7 +14,7 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.User
         public async Task<List<Client>> FindByClient()
         {
             var queryString = $"SELECT * FROM clients;";
-            List<Client> clients = await FindList(queryString);
+            List<Client> clients = await FindList<Client>(queryString);
             return clients;
         }
 

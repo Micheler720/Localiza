@@ -135,7 +135,7 @@ namespace Infra.Database.Implementations.SQLServerDriver
             return instance;
         }
 
-        protected async Task<List<T>> FindList(string queryString, List<DbParameter> parameters = null)
+        protected async Task<List<T>> FindList<T>(string queryString, List<DbParameter> parameters = null)
         {
             List<T> data = new List<T>();
             using (SqlConnection connection = new SqlConnection(connectionString))

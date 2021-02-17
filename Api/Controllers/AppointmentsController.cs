@@ -16,6 +16,7 @@ using Domain.UseCase.AppointmentService.Exceptions;
 using Infra.Database.Implementations.SQLServerDriver.Repositories.AppointmentyRepository;
 using Infra.Database.Implementations.SQLServerDriver.Repositories.User;
 using Infra.Database.Implementations.SQLServerDriver.Repositories.CarsRepository;
+using Api.Shared.Exceptions;
 
 namespace api.Controllers
 {
@@ -30,7 +31,7 @@ namespace api.Controllers
         private readonly IOperatorRepository<Operator> _contextOperator;
         private readonly AppointmentSaveService _save;
         private readonly AppointmentListService _list;
-        private readonly ListAppointmentCarAvailable _listCarAvailable;
+        private readonly ListAppointmentByPeriod _listCarAvailable;
         private readonly AppointmentDeleteService _delete;
 
         public AppointmentsController(ILogger<AppointmentsController> logger, ContextEntity context)
@@ -43,7 +44,7 @@ namespace api.Controllers
             _save = new AppointmentSaveService(_context, _contextCar, _contextClient, _contextOperator);
             _list = new AppointmentListService(_context);
             _delete = new AppointmentDeleteService(_context);
-            _listCarAvailable = new ListAppointmentCarAvailable(_context);
+            _listCarAvailable = new ListAppointmentByPeriod(_context);
         }
 
         [HttpGet]
@@ -55,11 +56,24 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        [Route("/appointments/dateAvailable")]
+        [Route("/appointments/findAppointmentByPeriod")]
         [AllowAnonymous]
-        public async Task<List<Appointment>> GetTimeCourse ([FromQuery] DateTime initialDate, [FromQuery] DateTime finalDate) 
+        public async Task<List<SchedulesDayAvailable>> GetTimeCourse ([FromQuery] DateTime initialDate, [FromQuery] DateTime finalDate) 
         {
-            return await this._listCarAvailable.Execute(initialDate, finalDate);
+            try
+            {
+                if (initialDate == default(DateTime) || finalDate == default(DateTime))
+                {
+                    throw new NotFoundParameterException("Paramentros de datas não informados. Verifique");
+                }
+                return await _listCarAvailable.Execute(initialDate, finalDate);
+            }catch(NotFoundParameterException err)
+            {
+                return null;
+            }
+           
+                
+            
         }
 
         [HttpPost]

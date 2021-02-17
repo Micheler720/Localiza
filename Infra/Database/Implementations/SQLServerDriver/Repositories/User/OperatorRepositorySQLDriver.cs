@@ -14,7 +14,7 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.User
         public async Task<List<Operator>> FindByOperator()
         {
             var queryString = $"SELECT * FROM operators;";
-            List<Operator> operators =await FindList(queryString);
+            List<Operator> operators =await FindList<Operator>(queryString);
             return operators;
         }
 
