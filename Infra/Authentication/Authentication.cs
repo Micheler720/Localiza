@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Text;
 using Domain.Interfaces;
 using Domain.Entities;
-using Domain.Entities.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 
