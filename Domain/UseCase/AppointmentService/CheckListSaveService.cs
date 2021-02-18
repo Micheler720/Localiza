@@ -10,10 +10,12 @@ namespace Domain.UseCase.AppointmentService
     public class CheckListSaveService
     {
         private IAppointmentRepository<Appointment> _repository;
+        private IChecklistRepository<CheckList> _repositoryCheckList;
 
-        public CheckListSaveService( IAppointmentRepository<Appointment> repository)
+        public CheckListSaveService( IAppointmentRepository<Appointment> repository, IChecklistRepository<CheckList> checklistRepository)
         {
             _repository = repository;
+            _repositoryCheckList = checklistRepository;
         }
 
         public async Task Execute(CheckList checklist, int idAppointment, DateTime dateTimeDelivery)
@@ -27,11 +29,18 @@ namespace Domain.UseCase.AppointmentService
             
             appointment.DateTimeDelivery = dateTimeDelivery;
             appointment.Inspected = true;
-            if(appointment.IdCheckList != null ) checklist.Id = (int)appointment.IdCheckList;
-            appointment.CheckList = checklist;
+            if (appointment.IdCheckList != null )
+            {
+                checklist.Id = (int)appointment.IdCheckList;
+                await _repository.Update(appointment);
+                await _repositoryCheckList.Update(checklist);
+                return;
 
-            
+            }
             await _repository.Update(appointment);
+            await _repositoryCheckList.Add(checklist);
+
+
         }
     }
 }

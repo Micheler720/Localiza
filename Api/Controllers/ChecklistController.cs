@@ -32,7 +32,7 @@ namespace api.Controllers
             _logger = logger;
             _context =  new CheckListRepositorySQLDriver();
             _contextAppointment = new AppointmentRepositorySQLDriver();
-            _save = new CheckListSaveService(_contextAppointment);
+            _save = new CheckListSaveService(_contextAppointment, _context);
             _list = new ChekListListService(_context);
             _delete = new CheckListDeleteService(_context);
         }
