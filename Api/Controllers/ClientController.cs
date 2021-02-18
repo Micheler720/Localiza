@@ -13,6 +13,8 @@ using Infra.Authentication;
 using Domain.UseCase.Builder;
 using Infra.Database.Implementations.SQLServerDriver.Repositories.User;
 using Domain.ViewModel.Appointments;
+using Domain.Shared.Exceptions;
+using System.ComponentModel.DataAnnotations;
 
 namespace api.Controllers
 {
@@ -45,14 +47,14 @@ namespace api.Controllers
         [Authorize(Roles = "Operator")]
         public async Task<List<ClientView>> Get ()
         {
-            return await this._userList.Execute();
+            return await _userList.Execute();
         }
         [HttpGet]
         [Route("/clients/appointments/{Cpf}")]
         [Authorize(Roles = "Operator, Client")]
-        public async Task<List<ClientAppointmentView>> AppointmentsCPF(string Cpf)
+        public async Task<List<ClientAppointmentView>> AppointmentsCPF([Required] string Cpf)
         {
-            return await _userListAppointment.Execute(Cpf);
+            return await _userListAppointment.Execute(Cpf);            
         }
 
         [HttpPost]
@@ -96,7 +98,7 @@ namespace api.Controllers
         [HttpDelete]
         [Route("/clients/{id}")]
         [Authorize(Roles = "Operator")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([Required] int id)
         {
             try
             {

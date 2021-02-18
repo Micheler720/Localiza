@@ -17,6 +17,7 @@ using Infra.Database.Implementations.SQLServerDriver.Repositories.AppointmentyRe
 using Infra.Database.Implementations.SQLServerDriver.Repositories.User;
 using Infra.Database.Implementations.SQLServerDriver.Repositories.CarsRepository;
 using Api.Shared.Exceptions;
+using System.ComponentModel.DataAnnotations;
 
 namespace api.Controllers
 {
@@ -58,7 +59,7 @@ namespace api.Controllers
         [HttpGet]
         [Route("/appointments/findAppointmentByPeriod")]
         [AllowAnonymous]
-        public async Task<List<SchedulesDayAvailable>> GetTimeCourse ([FromQuery] DateTime initialDate, [FromQuery] DateTime finalDate) 
+        public async Task<List<SchedulesDayAvailable>> GetTimeCourse ([Required][FromQuery] DateTime initialDate, [Required][FromQuery] DateTime finalDate) 
         {
             return await _listCarAvailable.Execute(initialDate, finalDate);
         }
@@ -104,7 +105,7 @@ namespace api.Controllers
         [HttpPut]
         [Route("/appointments/{id}")]
         [Authorize(Roles = "Operator")]
-        public async Task<IActionResult> Update([FromBody]AppointmentUpdateView appointmentBody, int id)
+        public async Task<IActionResult> Update([FromBody]AppointmentUpdateView appointmentBody, [Required] int id)
         {
             try
             {   var appointment = EntityBuilder.Call<Appointment>(appointmentBody);
@@ -132,7 +133,7 @@ namespace api.Controllers
         [HttpDelete]
         [Route("/appointments/{id}")]
         [Authorize(Roles = "Operator")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([Required] int id)
         {
             try
             {

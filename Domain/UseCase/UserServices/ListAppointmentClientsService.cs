@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Domain.Shared.Exceptions;
 using Domain.ViewModel.Users;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,16 @@ namespace Domain.UseCase.UserServices
 {
     public class ListAppointmentClientsService
     {
+        
         private IClientRepository<Client> _repository;
 
         public ListAppointmentClientsService(IClientRepository<Client> repository)
         {
-            this._repository = repository;
+            _repository = repository;
         }
         public async Task<List<ClientAppointmentView>> Execute(string cpf)
         {
+            if (cpf == null) throw new ParameterNotFoundException("CPF não definido para busca.");
             return await _repository.FindByAppointmentCpf(cpf);            
 
         }
