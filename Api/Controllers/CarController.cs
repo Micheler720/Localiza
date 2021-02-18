@@ -46,7 +46,7 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        [Route("/cars/avalilableCars")]
+        [Route("/cars/availableCars")]
         [AllowAnonymous]
         public async Task<List<ListAvailableCar>> AvalabileCar()
         {

@@ -168,7 +168,7 @@ namespace Infra.Database.Implementations.SQLServerDriver
             return data;
         }
 
-        protected async Task<T> FindFirst(string queryString, List<DbParameter> parameters = null)
+        protected async Task<T> FindFirst<T>(string queryString, List<DbParameter> parameters = null)
         {
             T data = default(T);
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -199,6 +199,5 @@ namespace Infra.Database.Implementations.SQLServerDriver
 
             return data;
         }
-
     }
 }

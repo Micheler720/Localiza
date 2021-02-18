@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Entities.Interfaces;
 using Domain.Interfaces;
 
 namespace Domain.Entities
 {
     [Table("car_categories")]
-    public class CarCategory 
+    public class CarCategory : IRegister
     {
         [Key]
         [Column]

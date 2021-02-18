@@ -24,7 +24,7 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.User
             parameters.Add(new SqlParameter("@cpf", cpf));
             parameters.Add(new SqlParameter("@password", password));
             var queryString = $"SELECT * FROM clients where cpf = @cpf and password = @password;";
-            Client client = await FindFirst(queryString, parameters);
+            Client client = await FindFirst<Client>(queryString, parameters);
             return client;
         }
 
@@ -35,7 +35,7 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.User
             parameters.Add(new SqlParameter("@cpf", user.Cpf));
             parameters.Add(new SqlParameter("@id", user.Id));
             var queryString = $"SELECT * FROM clients where id <> @id and cpf = @cpf ;";
-            Client client =await FindFirst(queryString, parameters);
+            Client client =await FindFirst<Client>(queryString, parameters);
             return client;
         }
     }

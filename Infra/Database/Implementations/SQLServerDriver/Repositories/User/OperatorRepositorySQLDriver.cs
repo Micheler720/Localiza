@@ -24,7 +24,7 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.User
             List<DbParameter> parameters = new List<DbParameter>();
             parameters.Add(new SqlParameter("@registration", user.Registration));
             parameters.Add(new SqlParameter("@id", user.Id));
-            Operator op = await FindFirst(queryString, parameters);            
+            Operator op = await FindFirst<Operator>(queryString, parameters);            
             return op;
         }
 
@@ -34,7 +34,7 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.User
             List<DbParameter> parameters = new List<DbParameter>();
             parameters.Add(new SqlParameter("@registration", registration));
             parameters.Add(new SqlParameter("@password", password));
-            Operator op = await FindFirst(queryString, parameters);            
+            Operator op = await FindFirst<Operator>(queryString, parameters);            
             return op;
         }
     }

@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Domain.Entities
 {
     [Table("appointments")]
     public class Appointment
     {
-        [KeyAttribute]
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -52,24 +53,26 @@ namespace Domain.Entities
 
         [Required]
         [Column]
-        public int IdClient { get; set; }   
+        public int IdClient { get; set; }
 
+        [JsonIgnore]
         public Client Client { get; set; }
 
         [Required]
         [Column]
-        public int IdCar { get; set; } 
-
+        public int IdCar { get; set; }
+        [JsonIgnore]
         public Car Car { get; set; }
 
         [Required]
         [Column]
-        public int IdOperator { get; set; }  
-
+        public int IdOperator { get; set; }
+        [JsonIgnore]
         public Operator Operator { get; set; }
 
         [Column]
         public int? IdCheckList { get; set; }
+        [JsonIgnore]
         public CheckList CheckList { get; set; }
     }
 }

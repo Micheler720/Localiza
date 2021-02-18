@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Domain.Entities.Interfaces;
 using Domain.Entities.Roles;
 
@@ -33,7 +34,8 @@ namespace Domain.Entities
         [Required]
         [Column]
         public UserRole UserRole { get; set; }
-        
+
+        [JsonIgnore]
         public List<Appointment> Appointments { get; set;}
         
     }

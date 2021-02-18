@@ -19,21 +19,21 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.CarsReposi
             var queryString = $"SELECT * FROM cars where board = @board ;";
             List<DbParameter> parameters = new List<DbParameter>();
             parameters.Add(new SqlParameter("@board", board));
-            Car car = await FindFirst(queryString, parameters);
+            Car car = await FindFirst<Car>(queryString, parameters);
             if (car.Id == 0) car = null;
             return car;
         }
 
         public async Task<List<ListAvailableCar>> FindByCarAvailable()
         {
-            var queryString = $"SELECT b.Id as IdCar, " +
+            var queryString = $"SELECT b.Id as Id, " +
                 "b.Board as Board, " +
                 "b.HourPrice as HourPrice, " +
                 "b.LuggageCapacity as LuggageCapacity," +
                 "b.TankCapacity as TankCapacity," +
                 "c.Name as Brand," +
                 "d.Name as Category," +
-                "e.Name as Fuel," +
+                "e.Id as Fuel," +
                 "f.Name as Model," +
                 "f.Name as Model, " +
                 "appointments.DateTimeExpectedCollected as DateTimeExpectedNextCollected" +
@@ -54,7 +54,7 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.CarsReposi
             List<DbParameter> parameters = new List<DbParameter>();
             parameters.Add(new SqlParameter("@board", car.Board));
             parameters.Add(new SqlParameter("@id", car.Id));
-            Car verifyCar = await FindFirst(queryString, parameters);
+            Car verifyCar = await FindFirst<Car>(queryString, parameters);
             return verifyCar;
         }
 

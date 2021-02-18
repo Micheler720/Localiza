@@ -24,10 +24,10 @@ namespace Domain.UseCase.BrandServices
 
             if(register.Id == 0 )
             {
-                await this._repository.Add(register);
+                await _repository.Add(register);
             }else
             {
-                await this._repository.Update(register);                
+                await _repository.Update(register);                
             }
 
         }

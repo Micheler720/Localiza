@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Domain.Entities
 {
@@ -30,7 +31,8 @@ namespace Domain.Entities
         [Required]
         [Column]
         public bool Scratches { get; set; }
-        
+
+        [JsonIgnore]
         public Appointment Appointment { get; set; }
 
     }
