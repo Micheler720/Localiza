@@ -21,7 +21,7 @@ namespace Domain.Entities
         public string Name { get; set;}
 
         [Required]
-        [MaxLength(15)]
+        [MaxLength(255)]
         [Column]
         public string Password { get; set; }
         

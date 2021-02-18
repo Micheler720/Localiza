@@ -66,7 +66,7 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("/clients/{id}")]
-        [Authorize(Roles = "Client")]
+        [Authorize(Roles = "Client, Operator")]
         public async Task<IActionResult> Update([FromBody] ClientSaveView userBody, int id)
         {
             try

@@ -27,7 +27,7 @@ namespace Domain.Entities
         public DateTime Birthay { get; set; }
 
         [Required]
-        [MaxLength(15)]
+        [MaxLength(255)]
         [Column]
         public string Password { get; set; }
 

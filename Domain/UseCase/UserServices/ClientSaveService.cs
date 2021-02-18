@@ -27,12 +27,15 @@ namespace Domain.UseCase.UserServices
                 userExist = await _repository.FindByPersonRegisterNot(client);
                 if(userExist != null) throw new UniqUserRegisterCpf("Usuário já registrado.");
 
-                if(client.Id == 0)
+                var hashPassword = new HashPasswordService();
+                client.Password = hashPassword.EncryptPassword(client.Password);
+
+                if (client.Id == 0)
                 {
-                    await this._repository.Add(client);
+                    await _repository.Add(client);
                     return;
                 }              
-                await this._repository.Update(client);
+                await _repository.Update(client);
             
         }
        

@@ -18,7 +18,9 @@ namespace Domain.UseCase.UserServices
 
         public async Task<OperatorJWT> Login(OperatorLogin user, IToken token)
         {
-           var loggedUser = await _repository.FindByRegistrationAndPassword(user.Resgistration, user.Password);
+            var hashPassword = new HashPasswordService();
+            var passwordEncrypted = hashPassword.EncryptPassword(user.Password);
+           var loggedUser = await _repository.FindByRegistrationAndPassword(user.Resgistration, passwordEncrypted);
            if(loggedUser == null) throw new UserNotFound("Usuário ou senha inválidos.");
            return new OperatorJWT(){
              Id = loggedUser.Id,

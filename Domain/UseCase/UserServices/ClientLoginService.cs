@@ -18,9 +18,12 @@ namespace Domain.UseCase.UserServices
 
         public async Task<ClientJWT> Login(ClientLogin user, IToken token)
         {
-           var loggedUser = await _repository.FindByCpfAndPassword(user.Cpf, user.Password);
+           var hashPassword = new HashPasswordService();
+           var passwordEncrypted = hashPassword.EncryptPassword(user.Password);
+           var loggedUser = await _repository.FindByCpfAndPassword(user.Cpf, passwordEncrypted);
            if(loggedUser == null) throw new UserNotFound("Usuário ou senha inválidos.");
-           return new ClientJWT(){
+           
+            return new ClientJWT(){
              Id = loggedUser.Id,
              Name = loggedUser.Name,
              Cpf = loggedUser.Cpf,

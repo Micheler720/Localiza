@@ -25,6 +25,10 @@ namespace Domain.UseCase.UserServices
             operato.UserRole = UserRole.Operator;  
             operatorExist = await _repository.FindByOperatorRegisterNot(operato);
             if(operatorExist != null) throw new UniqUserRegisterCpf("Usuário já registrado.");
+
+            var hashPassword = new HashPasswordService();
+            operato.Password = hashPassword.EncryptPassword(operato.Password);
+          
             if(operato.Id == 0)
             {
                 await this._repository.Add(operato);
