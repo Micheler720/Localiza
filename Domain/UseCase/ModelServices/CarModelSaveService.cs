@@ -9,19 +9,19 @@ namespace Domain.UseCase.ModelServices
     public class CarModelSaveService
     {
          
-        private IBaseRepository<CarModel> _repository;
+        private IBaseRegisterRepository<CarModel> _repository;
         
-        public CarModelSaveService(IBaseRepository<CarModel> repository)
+        public CarModelSaveService(IBaseRegisterRepository<CarModel> repository)
         {
             this._repository = repository;
         }
 
         public async Task Execute (CarModel register )
         {
-            var registerExist = await _repository.Filter( 
-                c => c.Name == register.Name && c.Id != register.Id);
+            var registerExist = await _repository.FindByNotNameExist<CarModel>( 
+                "car_models", register.Id, register.Name);
 
-            if(registerExist.Count > 0) throw new RegisterExistException("Registro já cadastrado, não é possivel realizar o cadastro.");
+            if(registerExist != null ) throw new RegisterExistException("Registro já cadastrado, não é possivel realizar o cadastro.");
 
             if(register.Id == 0 )
             {

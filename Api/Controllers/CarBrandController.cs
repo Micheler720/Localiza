@@ -20,7 +20,7 @@ namespace api.Controllers
     public class CarBrandController : ControllerBase
     {
         private readonly ILogger<CarBrandController> _logger;
-        private readonly BaseEntityRepository<CarBrand> _context;
+        private readonly BaseRegisterSQLRepository<CarBrand> _context;
         private readonly CarBrandSaveService _save;
         private readonly CarBrandDeleteService _delete;
         private readonly CarBrandListService _list;
@@ -28,7 +28,7 @@ namespace api.Controllers
         public CarBrandController(ILogger<CarBrandController> logger, ContextEntity context)
         {
             _logger = logger;
-            _context = new BaseEntityRepository<CarBrand>(context);
+            _context = new BaseRegisterSQLRepository<CarBrand>();
             _save = new CarBrandSaveService(_context);
             _delete = new CarBrandDeleteService(_context);
             _list = new CarBrandListService(_context);

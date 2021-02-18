@@ -2,6 +2,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain.Repositories;
 using Domain.Entities;
+using System.Collections.Generic;
+using Domain.ViewModel.Cars;
 
 namespace Infra.Database.Fake
 {
@@ -12,6 +14,11 @@ namespace Infra.Database.Fake
             await Task.Delay(2000);
             return this._data
                     .Where( car => car.Board == board ).FirstOrDefault();
+        }
+
+        public Task<List<ListAvailableCar>> FindByCarAvailable()
+        {
+            throw new System.NotImplementedException();
         }
 
         public async Task<Car> FindById(int id)

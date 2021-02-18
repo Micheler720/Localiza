@@ -28,6 +28,10 @@ namespace Domain.Entities
 
         [Required]
         [Column]
+        public string Images { get; set; }
+
+        [Required]
+        [Column]
         public int TankCapacity { get; set; }
 
         [Required]

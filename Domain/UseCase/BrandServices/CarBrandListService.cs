@@ -9,9 +9,9 @@ namespace Domain.UseCase.BrandServices
 {
     public class CarBrandListService
     {
-        private IBaseRepository<CarBrand> _repository;
+        private IBaseRegisterRepository<CarBrand> _repository;
         
-        public CarBrandListService(IBaseRepository<CarBrand> repository)
+        public CarBrandListService(IBaseRegisterRepository<CarBrand> repository)
         {
             this._repository = repository;
         }

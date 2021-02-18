@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Domain.ViewModel.Cars
 {
@@ -21,5 +23,11 @@ namespace Domain.ViewModel.Cars
         public int IdFuel {get; set; }
         [Required]
         public int IdModel {get; set; }
+
+        [Required]
+        public List<string> Images { get; set; }
+
+        [JsonIgnore]
+        public string ImagesString { get; set; }
     }
 }

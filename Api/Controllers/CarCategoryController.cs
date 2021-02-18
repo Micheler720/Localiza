@@ -20,7 +20,7 @@ namespace api.Controllers
     public class CarCategoryController : ControllerBase
     {
         private readonly ILogger<CarCategoryController> _logger;
-        private readonly BaseSQLServerRepository<CarCategory> _context;
+        private readonly BaseRegisterSQLRepository<CarCategory> _context;
         private readonly CategorySaveService _save;
         private readonly CategoryDeleteService _delete;
         private readonly CategoryListService _list;
@@ -28,7 +28,7 @@ namespace api.Controllers
         public CarCategoryController(ILogger<CarCategoryController> logger, ContextEntity context)
         {
             _logger = logger;
-            _context = new BaseSQLServerRepository<CarCategory>();
+            _context = new BaseRegisterSQLRepository<CarCategory>();
             _save = new CategorySaveService(_context);
             _delete = new CategoryDeleteService(_context);
             _list = new CategoryListService(_context);

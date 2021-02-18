@@ -14,12 +14,14 @@ namespace DomainsFake.UseCase.AppointmentServices
         
         private CheckListSaveService _service;
         private FakeAppointmentRepository _repository;
+        private FakeCheckListRepository _repositoryCheckList;
 
         [SetUp]
         public void Setup()
         {
-            this._repository = new FakeAppointmentRepository();
-            this._service = new CheckListSaveService(_repository);
+            _repository = new FakeAppointmentRepository();
+            _repositoryCheckList = new FakeCheckListRepository();
+            _service = new CheckListSaveService(_repository, _repositoryCheckList);
         }
 
         [Test]

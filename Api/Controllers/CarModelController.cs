@@ -11,6 +11,7 @@ using Domain.ViewModel.Shared;
 using Domain.UseCase.ModelServices;
 using Domain.Shared.Exceptions;
 using Domain.UseCase.Builder;
+using Infra.Database.Implementations.SQLServerDriver;
 
 namespace api.Controllers
 {
@@ -19,7 +20,7 @@ namespace api.Controllers
     public class CarModelController : ControllerBase
     {
         private readonly ILogger<CarModelController> _logger;
-        private readonly BaseEntityRepository<CarModel> _context;
+        private readonly BaseRegisterSQLRepository<CarModel> _context;
         private readonly CarModelSaveService _save;
         private readonly CarModelDeleteService _delete;
         private readonly CarModelListService _list;
@@ -27,7 +28,7 @@ namespace api.Controllers
         public CarModelController(ILogger<CarModelController> logger, ContextEntity context)
         {
             _logger = logger;
-            _context = new BaseEntityRepository<CarModel>(context);
+            _context = new BaseRegisterSQLRepository<CarModel>();
             _save = new CarModelSaveService(_context);
             _delete = new CarModelDeleteService(_context);
             _list = new CarModelListService(_context);

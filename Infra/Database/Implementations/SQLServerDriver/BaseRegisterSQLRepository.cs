@@ -11,15 +11,15 @@ using System.Threading.Tasks;
 
 namespace Infra.Database.Implementations.SQLServerDriver
 {
-    public class BaseRegisterSQLRepository
+    public class BaseRegisterSQLRepository<T> : BaseSQLServerRepository<T>, IBaseRegisterRepository<T> where T : class
     {
-        public void FindByNotNameExist<T>(string tableName,int id, string name)
+        public async Task<T> FindByNotNameExist<T>(string tableName,int id, string name)
         {
             var query = $"SELECT * FROM {tableName} where id != @id and name = @name ;";
             var param = new List<DbParameter>();
             param.Add(new SqlParameter("@id", id));
             param.Add(new SqlParameter("@name", name));
-            //return await FindFirst<T>(query, param);
+            return await FindFirst<T>(query, param);
         }
 
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain.Repositories;
 using Domain.Entities;
+using Domain.ViewModel.Appointments;
 
 namespace Infra.Database.Fake
 {
@@ -29,6 +30,11 @@ namespace Infra.Database.Fake
                 && data.DateTimeExpectedDelivery < dateTimeExpectedCollected
             ).FirstOrDefault();
             return client != null;
+        }
+
+        public Task<List<SchedulesDayAvailable>> FindAppointmentByPeriod(DateTime initialDate, DateTime finalDate)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<List<Appointment>> FindAvailableCar(DateTime initialDate, DateTime finalDate)

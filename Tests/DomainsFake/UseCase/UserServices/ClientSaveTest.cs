@@ -62,7 +62,7 @@ namespace DomainsFake.UseCase.UserServices
             var userRegister = await this._repository.GetAll();
 
             Assert.AreEqual(userRegister[0].Cpf, "13122785609");
-            Assert.AreEqual(userRegister[0].UserRole, UserRole.Person);
+            Assert.AreEqual(userRegister[0].UserRole, UserRole.Client);
         }        
 
        

@@ -60,7 +60,9 @@ namespace api.Controllers
         {
             try
             {
+                carBody.ImagesString = String.Join(',',carBody.Images);
                 var car = EntityBuilder.Call<Car>(carBody);
+                car.Images = carBody.ImagesString;
                 await _save.Execute(car);
                 return StatusCode(201);
             }
