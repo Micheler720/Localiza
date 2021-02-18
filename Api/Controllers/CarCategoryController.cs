@@ -49,10 +49,7 @@ namespace api.Controllers
         {
             try
             {
-                var category = new CarCategory()
-                {
-                    Name = register.Name
-                };
+                var category = EntityBuilder.Call<CarCategory>(register);
                 await _save.Execute(category);
                 return StatusCode(201);
             }

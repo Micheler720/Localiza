@@ -52,13 +52,7 @@ namespace api.Controllers
         {
             try
             {
-                var user = new Client() 
-                {  
-                    Cpf = userBody.Cpf, 
-                    Name = userBody.Name, 
-                    Password = userBody.Password, 
-                    Birthay = userBody.Birthay                  
-                };
+                var user = EntityBuilder.Call<Client>(userBody);
                 await _userSave.Execute(user);
                 return StatusCode(201);
             }

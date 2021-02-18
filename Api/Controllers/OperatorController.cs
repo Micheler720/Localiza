@@ -52,12 +52,7 @@ namespace api.Controllers
         {
             try
             {
-                var user = new Operator() 
-                {  
-                    Registration = userBody.Registration, 
-                    Name = userBody.Name, 
-                    Password = userBody.Password                 
-                };
+                var user = EntityBuilder.Call<Operator>(userBody);
                 await _userSave.Execute(user);
                 return StatusCode(201);
             }
