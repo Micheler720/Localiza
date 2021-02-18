@@ -6,6 +6,8 @@ using Domain.Entities;
 using Domain.Entities.Interfaces;
 using Domain.Entities.Roles;
 using Microsoft.EntityFrameworkCore;
+using Domain.UseCase.UserServices;
+using Domain.ViewModel.Users;
 
 namespace Infra.Database.Implementations.EntityFramework.Repositories.UsersRespository
 {
@@ -53,6 +55,11 @@ namespace Infra.Database.Implementations.EntityFramework.Repositories.UsersRespo
                 where  u.UserRole == userRole
                 select u;
             return await query.ToListAsync<Client>();
+        }
+
+        public Task<List<ClientAppointmentView>> FindByAppointmentCpf(string cpf)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

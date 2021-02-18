@@ -12,6 +12,7 @@ using Domain.ViewModel.Users;
 using Infra.Authentication;
 using Domain.UseCase.Builder;
 using Infra.Database.Implementations.SQLServerDriver.Repositories.User;
+using Domain.ViewModel.Appointments;
 
 namespace api.Controllers
 {
@@ -23,6 +24,7 @@ namespace api.Controllers
         private readonly IClientRepository<Client> _context;
         private readonly ClientSaveService _userSave;
         private readonly ClientListService _userList;
+        private readonly ListAppointmentClientsService _userListAppointment;
         private readonly ClientDeleteService _userDelete;
         private readonly ClientLoginService _clientLogin;
 
@@ -34,6 +36,7 @@ namespace api.Controllers
             _userList = new ClientListService(_context);
             _clientLogin = new ClientLoginService(_context);
             _userDelete = new ClientDeleteService(_context);
+            _userListAppointment = new ListAppointmentClientsService(_context);
         }
 
 
@@ -43,6 +46,13 @@ namespace api.Controllers
         public async Task<List<ClientView>> Get ()
         {
             return await this._userList.Execute();
+        }
+        [HttpGet]
+        [Route("/clients/appointments/{Cpf}")]
+        [AllowAnonymous]
+        public async Task<List<ClientAppointmentView>> AppointmentsCPF(string Cpf)
+        {
+            return await _userListAppointment.Execute(Cpf);
         }
 
         [HttpPost]
