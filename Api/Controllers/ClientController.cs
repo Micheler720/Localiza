@@ -49,7 +49,7 @@ namespace api.Controllers
         }
         [HttpGet]
         [Route("/clients/appointments/{Cpf}")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Operator, Client")]
         public async Task<List<ClientAppointmentView>> AppointmentsCPF(string Cpf)
         {
             return await _userListAppointment.Execute(Cpf);

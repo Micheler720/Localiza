@@ -9,7 +9,7 @@ using Domain.Entities.Roles;
 namespace Domain.Entities
 {
     [Table("clients")]
-    public class Client : IUser, IPerson
+    public class Client : IUser, IPerson, IAdress
     {
         [Key]
         [Column]
@@ -37,6 +37,23 @@ namespace Domain.Entities
 
         [JsonIgnore]
         public List<Appointment> Appointments { get; set;}
-        
+
+        [Column]
+        public string CEP { get; set; }
+
+        [Column]
+        public string Logradouro { get; set; }
+
+        [Column]
+        public int Number { get; set; }
+
+        [Column]
+        public string City { get; set; }
+
+        [Column]
+        public string Complement { get; set; }
+
+        [Column]
+        public string State { get; set; }
     }
 }
