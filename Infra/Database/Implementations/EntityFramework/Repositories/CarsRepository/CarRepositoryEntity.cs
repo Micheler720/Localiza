@@ -6,7 +6,7 @@ using Domain.Entities;
 using Domain.Entities.Interfaces;
 using Domain.Entities.Roles;
 using Microsoft.EntityFrameworkCore;
-
+using Domain.ViewModel.Cars;
 
 namespace Infra.Database.Implementations.EntityFramework.Repositories.CarsRepository
 {
@@ -26,6 +26,11 @@ namespace Infra.Database.Implementations.EntityFramework.Repositories.CarsReposi
                 where  board == c.Board
                 select c;
             return await query.FirstOrDefaultAsync<Car>() as Car;
+        }
+
+        public Task<List<ListAvailableCar>> FindByCarAvailable()
+        {
+            throw new System.NotImplementedException();
         }
 
         public async Task<Car> FindById(int id)

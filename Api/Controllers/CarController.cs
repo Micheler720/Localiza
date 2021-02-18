@@ -24,6 +24,7 @@ namespace api.Controllers
         private readonly ICarRepository<Car> _context;
         private readonly CarSaveService _save;
         private readonly CarListService _list;
+        private readonly ListAvailableCarsService _listCarAvailable;
         private readonly CarDeleteService _delete;
 
         public CarController(ILogger<CarController> logger, ContextEntity context)
@@ -33,6 +34,7 @@ namespace api.Controllers
             _save = new CarSaveService(_context);
             _list = new CarListService(_context);
             _delete = new CarDeleteService(_context);
+            _listCarAvailable = new ListAvailableCarsService(_context);
         }
 
         [HttpGet]
@@ -41,6 +43,14 @@ namespace api.Controllers
         public async Task<List<Car>> Get ()
         {
             return await this._list.Execute();
+        }
+
+        [HttpGet]
+        [Route("/cars/avalilableCars")]
+        [AllowAnonymous]
+        public async Task<List<ListAvailableCar>> AvalabileCar()
+        {
+            return await _listCarAvailable.Execute();
         }
 
         [HttpPost]

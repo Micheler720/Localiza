@@ -23,10 +23,10 @@ namespace Domain.UseCase.CarServices
 
             if(car.Id == 0 )
             {
-                await this._repository.Add(car);
+                await _repository.Add(car);
             }else
             {
-                await this._repository.Update(car);                
+                await _repository.Update(car);                
             }
 
         }

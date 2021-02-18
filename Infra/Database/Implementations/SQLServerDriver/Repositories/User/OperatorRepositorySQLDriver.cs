@@ -30,7 +30,7 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.User
 
         public async Task<Operator> FindByRegistrationAndPassword(string registration, string password)
         {
-            var queryString = $"SELECT * FROM clients where registration = @registration and password = @password;";
+            var queryString = $"SELECT * FROM operators where registration = @registration and password = @password;";
             List<DbParameter> parameters = new List<DbParameter>();
             parameters.Add(new SqlParameter("@registration", registration));
             parameters.Add(new SqlParameter("@password", password));

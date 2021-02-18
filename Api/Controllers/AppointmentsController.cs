@@ -60,20 +60,7 @@ namespace api.Controllers
         [AllowAnonymous]
         public async Task<List<SchedulesDayAvailable>> GetTimeCourse ([FromQuery] DateTime initialDate, [FromQuery] DateTime finalDate) 
         {
-            try
-            {
-                if (initialDate == default(DateTime) || finalDate == default(DateTime))
-                {
-                    throw new NotFoundParameterException("Paramentros de datas não informados. Verifique");
-                }
-                return await _listCarAvailable.Execute(initialDate, finalDate);
-            }catch(NotFoundParameterException err)
-            {
-                return null;
-            }
-           
-                
-            
+            return await _listCarAvailable.Execute(initialDate, finalDate);
         }
 
         [HttpPost]

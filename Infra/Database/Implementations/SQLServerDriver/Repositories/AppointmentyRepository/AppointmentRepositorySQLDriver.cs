@@ -19,7 +19,6 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.Appointmen
             parameters.Add(new SqlParameter("@dateTimeExpectedCollected", dateTimeExpectedCollected));
             var queryString = $"SELECT * FROM appointments where idCar = @idCar and dateTimeExpectedDelivery <= @dateTimeExpectedCollected;";
             Appointment ap = await FindFirst(queryString, parameters);
-            if (ap.Client == null) ap = null;
             return ap == null;
         }
 
