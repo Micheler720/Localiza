@@ -29,6 +29,12 @@ namespace Domain.UseCase.AppointmentService
             
             appointment.DateTimeDelivery = dateTimeDelivery;
             appointment.Inspected = true;
+
+            if (!checklist.CleanCar) appointment.AdditionalCosts = appointment.Amount * 0.30;
+            if (!checklist.FullTank) appointment.AdditionalCosts = appointment.Amount * 0.30;
+            if (checklist.Crumpled) appointment.AdditionalCosts = appointment.Amount * 0.30;
+            if (checklist.Scratches) appointment.AdditionalCosts = appointment.Amount * 0.30;
+
             if (appointment.IdCheckList != null )
             {
                 checklist.Id = (int)appointment.IdCheckList;
@@ -37,10 +43,12 @@ namespace Domain.UseCase.AppointmentService
                 return;
 
             }
+                       
             await _repository.Update(appointment);
             await _repositoryCheckList.Add(checklist);
 
 
         }
+
     }
 }

@@ -45,8 +45,8 @@ namespace Domain.UseCase.AppointmentService
             
             
             if(appointment.DateTimeExpectedCollected > appointment.DateTimeExpectedDelivery) throw new DateTimeColectedInvalidException("Data esperada da coleta maior que a data esperada para entrega. Verifique.");
-                
-            
+
+            appointment.Amount = appointment.HourPrice * appointment.HourLocation;
             
             if(appointment.Id == 0)
             {
