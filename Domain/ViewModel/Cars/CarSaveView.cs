@@ -28,6 +28,6 @@ namespace Domain.ViewModel.Cars
         public List<string> Images { get; set; }
 
         [JsonIgnore]
-        public string ImagesString { get; set; }
+        public string Photos { get; set; }
     }
 }

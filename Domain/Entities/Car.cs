@@ -28,7 +28,10 @@ namespace Domain.Entities
 
         [Required]
         [Column]
-        public string Images { get; set; }
+        [JsonIgnore]
+        public string Photos { get; set; }
+
+        public string[] Images { get; set; }
 
         [Required]
         [Column]

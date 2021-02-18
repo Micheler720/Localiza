@@ -42,7 +42,7 @@ namespace api.Controllers
         [AllowAnonymous]
         public async Task<List<Car>> Get ()
         {
-            return await this._list.Execute();
+            return await _list.Execute();
         }
 
         [HttpGet]
@@ -60,9 +60,8 @@ namespace api.Controllers
         {
             try
             {
-                carBody.ImagesString = String.Join(',',carBody.Images);
+                carBody.Photos = String.Join(',',carBody.Images);
                 var car = EntityBuilder.Call<Car>(carBody);
-                car.Images = carBody.ImagesString;
                 await _save.Execute(car);
                 return StatusCode(201);
             }
@@ -81,7 +80,7 @@ namespace api.Controllers
         {
             try
             {
-
+                carBody.Photos = String.Join(',', carBody.Images);
                 var car = EntityBuilder.Call<Car>(carBody);
                 car.Id = id;
                 await _save.Execute(car);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Domain.ViewModel.Cars
 {
@@ -16,5 +17,8 @@ namespace Domain.ViewModel.Cars
         public int Fuel { get; set; }
         public string Model { get; set; }
         public DateTime DateTimeExpectedNextCollected { get; set; }
+        [JsonIgnore]
+        public string Photos { get; set; }
+        public string[] Images { get; set; }
     }
 }

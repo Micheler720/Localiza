@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Repositories;
 using Domain.Entities;
+using System.Linq;
 
 namespace Domain.UseCase.CarServices
 {
@@ -16,7 +17,13 @@ namespace Domain.UseCase.CarServices
 
         public async Task<List<Car>> Execute ()
         {
-            return await _repository.GetAll();
+            var cars = await _repository.GetAll();
+            var carsEdit = cars.Select((car) =>
+            {
+                car.Images = car.Photos != null ? car.Photos.Split(','): null;
+                return car;
+            }).ToList();
+            return (List<Car>)carsEdit;
         }
     }
 }
