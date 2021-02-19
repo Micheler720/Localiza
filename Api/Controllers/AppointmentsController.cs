@@ -74,8 +74,8 @@ namespace api.Controllers
             try
             {
                 var path = Startup.ContentRoot;
-                await _save.Execute(EntityBuilder.Call<Appointment>(appointmentBody), path);                
-                return StatusCode(201);
+                var pdfUrl = await _save.Execute(EntityBuilder.Call<Appointment>(appointmentBody), path);                
+                return StatusCode(201, pdfUrl);
             }
             catch(NotFoundRegisterException err)
             {

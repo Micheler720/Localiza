@@ -17,7 +17,7 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.Appointmen
             List<DbParameter> parameters = new List<DbParameter>();
             parameters.Add(new SqlParameter("@idCar", idCar));
             parameters.Add(new SqlParameter("@dateTimeExpectedCollected", dateTimeExpectedCollected));
-            var queryString = $"SELECT * FROM appointments where idCar = @idCar and dateTimeExpectedDelivery <= @dateTimeExpectedCollected;";
+            var queryString = $"SELECT * FROM appointments where idCar = @idCar and dateTimeExpectedDelivery <= @dateTimeExpectedCollected and dateTimeExpectedCollected > @dateTimeExpectedCollected ;";
             Appointment ap = await FindFirst<Appointment>(queryString, parameters);
             return ap == null;
         }
@@ -27,9 +27,8 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.Appointmen
             List<DbParameter> parameters = new List<DbParameter>();
             parameters.Add(new SqlParameter("@idClient", idClient));
             parameters.Add(new SqlParameter("@dateTimeExpectedCollected", dateTimeExpectedCollected));
-            var queryString = $"SELECT * FROM appointments where idClient = @idClient and dateTimeExpectedDelivery <= @dateTimeExpectedCollected;";
+            var queryString = $"SELECT * FROM appointments where idClient = @idClient and dateTimeExpectedDelivery <= @dateTimeExpectedCollected and dateTimeExpectedCollected > @dateTimeExpectedCollected ;";
             Appointment ap = await FindFirst<Appointment>(queryString, parameters);
-            if (ap.Client == null) ap = null;
             return ap == null;
         }
 

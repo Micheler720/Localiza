@@ -13,6 +13,8 @@ using Domain.UseCase.AppointmentService.Exceptions;
 using Domain.UseCase.Builder;
 using Domain.ViewModel.Appointments;
 using Infra.Database.Implementations.SQLServerDriver.Repositories.AppointmentyRepository;
+using Api;
+using Infra.Services.PDFServices;
 
 namespace api.Controllers
 {
@@ -32,7 +34,7 @@ namespace api.Controllers
             _logger = logger;
             _context =  new CheckListRepositorySQLDriver();
             _contextAppointment = new AppointmentRepositorySQLDriver();
-            _save = new CheckListSaveService(_contextAppointment, _context);
+            _save = new CheckListSaveService(_contextAppointment, _context, new PDFWriter());
             _list = new ChekListListService(_context);
             _delete = new CheckListDeleteService(_context);
         }
@@ -52,9 +54,10 @@ namespace api.Controllers
         {
             try
             {
+                var path = Startup.ContentRoot;
                 var cheklist = EntityBuilder.Call<CheckList>(checklistBody);
-                await _save.Execute(cheklist, idAppointment, checklistBody.DateTimeDelivery );                
-                return StatusCode(201);
+                var pdfUrl = await _save.Execute(cheklist, idAppointment, checklistBody.DateTimeDelivery, path);                
+                return StatusCode(201, pdfUrl);
             }
             catch(NotFoundRegisterException err)
             {
@@ -91,9 +94,10 @@ namespace api.Controllers
         {
             try
             {
+                var path = Startup.ContentRoot;
                 var checkList = EntityBuilder.Call<CheckList>(checklistBody);
                 checkList.Id = id;                
-                await _save.Execute(checkList, idAppointment, checklistBody.DateTimeDelivery);
+                await _save.Execute(checkList, idAppointment, checklistBody.DateTimeDelivery, path);
                 return StatusCode(204);
             }
             catch(NotFoundRegisterException err)
