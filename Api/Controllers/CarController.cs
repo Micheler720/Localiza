@@ -45,13 +45,7 @@ namespace api.Controllers
             return await _list.Execute();
         }
 
-        [HttpGet]
-        [Route("/cars/availableCars")]
-        [AllowAnonymous]
-        public async Task<List<ListAvailableCar>> AvalabileCar()
-        {
-            return await _listCarAvailable.Execute();
-        }
+        
 
         [HttpPost]
         [Route("/cars")]
@@ -60,7 +54,8 @@ namespace api.Controllers
         {
             try
             {
-                carBody.Photos = String.Join(',',carBody.Images);
+                carBody.Photos = carBody.Images.Count > 1 ? string.Join(',', carBody.Images) : carBody.Images[0];
+                carBody.Images = null;
                 var car = EntityBuilder.Call<Car>(carBody);
                 await _save.Execute(car);
                 return StatusCode(201);
@@ -80,7 +75,8 @@ namespace api.Controllers
         {
             try
             {
-                carBody.Photos = String.Join(',', carBody.Images);
+                carBody.Photos = carBody.Images.Count > 1 ? string.Join(',', carBody.Images) : carBody.Images[0];
+                carBody.Images = null;
                 var car = EntityBuilder.Call<Car>(carBody);
                 car.Id = id;
                 await _save.Execute(car);
@@ -110,8 +106,14 @@ namespace api.Controllers
                     Message = err.Message
                 });
             }
-        }     
+        }
+        [HttpGet]
+        [Route("/cars/availableCars")]
+        [AllowAnonymous]
+        public async Task<List<ListAvailableCar>> AvalabileCar()
+        {
+            return await _listCarAvailable.Execute();
+        }
 
-        
     }
 }
