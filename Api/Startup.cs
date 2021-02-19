@@ -20,10 +20,13 @@ namespace Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
+
+            Startup.ContentRoot = env.ContentRootPath;
             Configuration = configuration;
         }
+        public static string ContentRoot;
 
         public IConfiguration Configuration { get; }
 

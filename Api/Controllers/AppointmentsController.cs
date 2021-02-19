@@ -18,6 +18,8 @@ using Infra.Database.Implementations.SQLServerDriver.Repositories.User;
 using Infra.Database.Implementations.SQLServerDriver.Repositories.CarsRepository;
 using Api.Shared.Exceptions;
 using System.ComponentModel.DataAnnotations;
+using Api;
+using Infra.Services.PDFServices;
 
 namespace api.Controllers
 {
@@ -42,7 +44,7 @@ namespace api.Controllers
             _contextClient = new ClientRepositorySQLDriver();
             _contextOperator = new OperatorRepositorySQLDriver();
             _contextCar = new CarRepositorySQLDriver();
-            _save = new AppointmentSaveService(_context, _contextCar, _contextClient, _contextOperator);
+            _save = new AppointmentSaveService(_context, _contextCar, _contextClient, _contextOperator, new PDFWriter());
             _list = new AppointmentListService(_context);
             _delete = new AppointmentDeleteService(_context);
             _listCarAvailable = new ListAppointmentByPeriod(_context);
@@ -71,7 +73,8 @@ namespace api.Controllers
         {
             try
             {
-                await _save.Execute(EntityBuilder.Call<Appointment>(appointmentBody));                
+                var path = Startup.ContentRoot;
+                await _save.Execute(EntityBuilder.Call<Appointment>(appointmentBody), path);                
                 return StatusCode(201);
             }
             catch(NotFoundRegisterException err)
@@ -108,9 +111,11 @@ namespace api.Controllers
         public async Task<IActionResult> Update([FromBody]AppointmentUpdateView appointmentBody, [Required] int id)
         {
             try
-            {   var appointment = EntityBuilder.Call<Appointment>(appointmentBody);
+            {
+                var path = Startup.ContentRoot;
+                var appointment = EntityBuilder.Call<Appointment>(appointmentBody);
                 appointment.Id = id;             
-                await _save.Execute(appointment);
+                await _save.Execute(appointment, path );
                 return StatusCode(204);
             }
             catch(NotFoundRegisterException err)

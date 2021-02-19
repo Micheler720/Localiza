@@ -4,6 +4,8 @@ using Domain.Repositories;
 using Domain.UseCase.AppointmentService.Exceptions;
 using Domain.Shared.Exceptions;
 using Domain.Entities;
+using Domain.Interfaces;
+using Domain.UseCase.AppointmentService.View;
 
 namespace Domain.UseCase.AppointmentService
 {
@@ -13,21 +15,24 @@ namespace Domain.UseCase.AppointmentService
         private ICarRepository<Car> _repositoryCar;
         private IClientRepository<Client> _repositoryClient;
         private IOperatorRepository<Operator> _repositoryOperator;
+        private IPDFWriter _servicePDF;
 
         public AppointmentSaveService(
             IAppointmentRepository<Appointment> repository, 
             ICarRepository<Car> repositoryCar,
             IClientRepository<Client> repositoryClient,
-            IOperatorRepository<Operator> repositoryOperator
+            IOperatorRepository<Operator> repositoryOperator,
+            IPDFWriter servicePDF
             )
         {
             _repository = repository;
             _repositoryCar = repositoryCar;
             _repositoryClient = repositoryClient;
             _repositoryOperator = repositoryOperator;
+            _servicePDF = servicePDF;
         }
 
-        public async Task Execute(Appointment appointment)
+        public async Task Execute(Appointment appointment, string path)
         {
             if(appointment.HourPrice <= 0 ) throw new ValuesInvalidException("Valor de hora por locação invalido. Verifique!");
             if(appointment.HourLocation <= 0 ) throw new ValuesInvalidException("Quantidade de horas locadas invalido. Verifique!");
@@ -45,10 +50,14 @@ namespace Domain.UseCase.AppointmentService
             
             
             if(appointment.DateTimeExpectedCollected > appointment.DateTimeExpectedDelivery) throw new DateTimeColectedInvalidException("Data esperada da coleta maior que a data esperada para entrega. Verifique.");
+            appointment.Car = car;
+            appointment.Client = client;
+            appointment.Amount = car.HourPrice * appointment.HourLocation;
+            appointment.Subtotal = appointment.Amount;
 
-            appointment.Amount = appointment.HourPrice * appointment.HourLocation;
-            
-            if(appointment.Id == 0)
+            string pdf;
+
+            if (appointment.Id == 0)
             {
                 if(appointment.DateTimeExpectedCollected < DateTime.Now) throw new DateTimeColectedInvalidException("Data esperada da coleta menor que data atual. Verifique!");   
 
@@ -65,11 +74,16 @@ namespace Domain.UseCase.AppointmentService
                 appointment.Schedule = DateTime.Now;
                 
                 await _repository.Add(appointment);
+                pdf = LeaseAgreementToPDF.Writer(appointment);
+                _servicePDF.Build(path, pdf);
 
                 return;
             }
-            
+
+
             await _repository.Update(appointment);
+            pdf = LeaseAgreementToPDF.Writer(appointment);
+            _servicePDF.Build(path, pdf);
         }
     }
 }
