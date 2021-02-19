@@ -14,20 +14,28 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.Appointmen
     {
         public async Task<bool> CheckAvailabilityCar(int idCar, DateTime dateTimeExpectedCollected)
         {
+            var dateTimeCollected = new DateTime(dateTimeExpectedCollected.Year, dateTimeExpectedCollected.Month, dateTimeExpectedCollected.Day, 23, 59, 59);
             List<DbParameter> parameters = new List<DbParameter>();
             parameters.Add(new SqlParameter("@idCar", idCar));
-            parameters.Add(new SqlParameter("@dateTimeExpectedCollected", dateTimeExpectedCollected));
-            var queryString = $"SELECT * FROM appointments where idCar = @idCar and dateTimeExpectedDelivery <= @dateTimeExpectedCollected and dateTimeExpectedCollected >= @dateTimeExpectedCollected ;";
+            parameters.Add(new SqlParameter("@dateTimeExpectedCollected", dateTimeCollected));
+            var queryString = $"SELECT * FROM appointments " +
+                                $"where idCar = @idCar " +
+                                $"and dateTimeExpectedDelivery >= @dateTimeExpectedCollected " +
+                                $"and dateTimeExpectedCollected <= @dateTimeExpectedCollected ;";
             Appointment ap = await FindFirst<Appointment>(queryString, parameters);
             return ap == null;
         }
 
         public async Task<bool> CheckAvailabilityClient(int idClient, DateTime dateTimeExpectedCollected)
         {
+            var dateTimeCollected = new DateTime(dateTimeExpectedCollected.Year, dateTimeExpectedCollected.Month, dateTimeExpectedCollected.Day, 23, 59, 59);
             List<DbParameter> parameters = new List<DbParameter>();
             parameters.Add(new SqlParameter("@idClient", idClient));
-            parameters.Add(new SqlParameter("@dateTimeExpectedCollected", dateTimeExpectedCollected));
-            var queryString = $"SELECT * FROM appointments where idClient = @idClient and dateTimeExpectedDelivery <= @dateTimeExpectedCollected and dateTimeCollected >= @dateTimeExpectedCollected ;";
+            parameters.Add(new SqlParameter("@dateTimeExpectedCollected", dateTimeCollected));
+            var queryString = $"SELECT * FROM appointments " +
+                $"where idClient = @idClient " +
+                $"and dateTimeExpectedDelivery >= @dateTimeExpectedCollected " +
+                $"and dateTimeExpectedCollected <= @dateTimeExpectedCollected ;";
             Appointment ap = await FindFirst<Appointment>(queryString, parameters);
             return ap == null;
         }
