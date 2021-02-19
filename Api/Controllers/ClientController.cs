@@ -49,13 +49,6 @@ namespace api.Controllers
         {
             return await _userList.Execute();
         }
-        [HttpGet]
-        [Route("/clients/appointments/{Cpf}")]
-        [Authorize(Roles = "Operator, Client")]
-        public async Task<List<ClientAppointmentView>> AppointmentsCPF([Required] string Cpf)
-        {
-            return await _userListAppointment.Execute(Cpf);            
-        }
 
         [HttpPost]
         [Route("/clients")]
@@ -130,6 +123,14 @@ namespace api.Controllers
             }
         }
 
-        
+        [HttpGet]
+        [Route("/clients/appointments/{Cpf}")]
+        [Authorize(Roles = "Operator, Client")]
+        public async Task<List<ClientAppointmentView>> AppointmentsCPF([Required] string Cpf)
+        {
+            return await _userListAppointment.Execute(Cpf);
+        }
+
+
     }
 }
