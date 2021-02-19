@@ -24,6 +24,7 @@ namespace Domain.Entities
         [Column]
         public string Cpf { get; set; }
 
+        [Column]
         public DateTime Birthay { get; set; }
 
         [Required]

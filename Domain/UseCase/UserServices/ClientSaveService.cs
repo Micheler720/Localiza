@@ -15,13 +15,13 @@ namespace Domain.UseCase.UserServices
         {
             this._repository = repository;
         }
-        public async Task Execute(Client client = null)
+        public async Task Execute(Client client)
         {
             if(client.Cpf == null ) throw new UserNotDefinid(
                 "CPF de cliente não foi definido."
                 );
 
-                IUser userExist;
+                Client userExist;
 
                 client.UserRole = UserRole.Client;
                 userExist = await _repository.FindByPersonRegisterNot(client);
