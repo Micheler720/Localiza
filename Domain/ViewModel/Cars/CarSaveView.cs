@@ -21,6 +21,9 @@ namespace Domain.ViewModel.Cars
         public int IdCategory {get; set; }
         [Required]
         public int IdFuel {get; set; }
+
+        [Required]
+        public int Year { get; set; }
         [Required]
         public int IdModel {get; set; }
 

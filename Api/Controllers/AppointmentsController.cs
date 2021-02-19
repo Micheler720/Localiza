@@ -105,6 +105,54 @@ namespace api.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("/appointments/simulator")]
+        [Authorize(Roles = "Operator")]
+        public async Task<IActionResult> Simulator([FromBody] AppointmentCreateView appointmentBody)
+        {
+            try
+            {
+                var path = Startup.ContentRoot;
+                var pdfUrl = await _save.Execute(EntityBuilder.Call<Appointment>(appointmentBody), path, true);
+                return StatusCode(201, pdfUrl);
+            }
+            catch (NotFoundRegisterException err)
+            {
+                return StatusCode(404, new
+                {
+                    Message = err.Message
+                });
+            }
+            catch (CarNotAvalabityException err)
+            {
+                return StatusCode(401, new
+                {
+                    Message = err.Message
+                });
+            }
+            catch (ClientNotAvalabityException err)
+            {
+                return StatusCode(401, new
+                {
+                    Message = err.Message
+                });
+            }
+            catch (DateTimeColectedInvalidException err)
+            {
+                return StatusCode(401, new
+                {
+                    Message = err.Message
+                });
+            }
+            catch (ValuesInvalidException err)
+            {
+                return StatusCode(401, new
+                {
+                    Message = err.Message
+                });
+            }
+        }
+
         [HttpPut]
         [Route("/appointments/{id}")]
         [Authorize(Roles = "Operator")]
