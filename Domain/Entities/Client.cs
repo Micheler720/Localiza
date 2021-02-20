@@ -9,7 +9,7 @@ using Domain.Entities.Roles;
 namespace Domain.Entities
 {
     [Table("clients")]
-    public class Client : IUser, IPerson, IAdress
+    public class Client : IUser, IPerson
     {
         [Key]
         [Column]

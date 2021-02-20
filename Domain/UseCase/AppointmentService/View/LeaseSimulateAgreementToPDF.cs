@@ -39,13 +39,6 @@ namespace Domain.UseCase.AppointmentService.View
             body += "<hr>";
             body += "<h3>Reserva do veículo</h3>";
             body += "<hr>";
-            body += "<hr>";
-            body += $"Marca: {appointment.Car.Brand.Name}<br>";
-            body += $"Modelo: {appointment.Car.Model.Name}<br>";
-            body += $"Categoria: {appointment.Car.Category.Name}<br>";
-            body += $"Capacidade do tanque: {appointment.Car.TankCapacity}<br>";
-            body += $"Capacidade do Porta Malas: {appointment.Car.LuggageCapacity}";
-            body += "<hr>";
             body += $"<h2>Valor Estimado: R${appointment.Subtotal}</h2>";
             body += "<hr>";
 

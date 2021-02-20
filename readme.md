@@ -1,4 +1,4 @@
-# Localiza Locação de Carros
+# Localiza - Locação de Carros
 ## _REST API desenvolvida para realizar alocação de veículos._
 
 ## Estrutura do Projeto:
