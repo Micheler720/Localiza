@@ -13,9 +13,9 @@ namespace Domain.UseCase.UserServices
     public class ListAppointmentClientsService
     {
         
-        private IClientRepository<Client> _repository;
+        private IAppointmentRepository<Appointment> _repository;
 
-        public ListAppointmentClientsService(IClientRepository<Client> repository)
+        public ListAppointmentClientsService(IAppointmentRepository<Appointment> repository)
         {
             _repository = repository;
         }

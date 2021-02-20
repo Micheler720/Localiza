@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using Domain.ViewModel.Appointments;
+using Domain.ViewModel.Users;
 
 namespace Infra.Database.Implementations.EntityFramework.Repositories.AppointmentRepository
 {
@@ -45,6 +46,11 @@ namespace Infra.Database.Implementations.EntityFramework.Repositories.Appointmen
         }
 
         public async Task<List<SchedulesDayAvailable>> FindAppointmentByPeriod(DateTime initialDate, DateTime finalDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ClientAppointmentView>> FindByAppointmentCpf(string cpf)
         {
             throw new NotImplementedException();
         }

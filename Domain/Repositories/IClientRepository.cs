@@ -10,6 +10,5 @@ namespace Domain.Repositories
         Task<Client> FindByPersonRegisterNot(Client user);
         Task<Client> FindByCpfAndPassword(string cpf, string password);
         Task<List<Client>> FindByClient();
-        Task<List<ClientAppointmentView>> FindByAppointmentCpf(string cpf);
     }
 }

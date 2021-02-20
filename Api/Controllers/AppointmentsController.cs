@@ -20,6 +20,8 @@ using Api.Shared.Exceptions;
 using System.ComponentModel.DataAnnotations;
 using Api;
 using Infra.Services.PDFServices;
+using Domain.ViewModel.Users;
+using Domain.UseCase.UserServices;
 
 namespace api.Controllers
 {
@@ -32,6 +34,7 @@ namespace api.Controllers
         private readonly ICarRepository<Car> _contextCar;
         private readonly IClientRepository<Client> _contextClient;
         private readonly IOperatorRepository<Operator> _contextOperator;
+        private readonly ListAppointmentClientsService _userListAppointment;
         private readonly AppointmentSaveService _save;
         private readonly AppointmentListService _list;
         private readonly ListAppointmentByPeriod _listCarAvailable;
@@ -48,6 +51,7 @@ namespace api.Controllers
             _list = new AppointmentListService(_context);
             _delete = new AppointmentDeleteService(_context);
             _listCarAvailable = new ListAppointmentByPeriod(_context);
+            _userListAppointment = new ListAppointmentClientsService(_context);
         }
 
         [HttpGet]
@@ -151,6 +155,14 @@ namespace api.Controllers
                     Message = err.Message
                 });
             }
+        }
+
+        [HttpGet]
+        [Route("/appointments/clients/{Cpf}")]
+        [Authorize(Roles = "Operator, Client")]
+        public async Task<List<ClientAppointmentView>> AppointmentsCPF([Required] string Cpf)
+        {
+            return await _userListAppointment.Execute(Cpf);
         }
 
         [HttpPut]
