@@ -39,6 +39,7 @@ namespace api.Controllers
         private readonly AppointmentListService _list;
         private readonly ListAppointmentByPeriod _listCarAvailable;
         private readonly AppointmentDeleteService _delete;
+        private readonly AppointmentSimulateService _simulate;
 
         public AppointmentsController(ILogger<AppointmentsController> logger, ContextEntity context)
         {
@@ -52,6 +53,7 @@ namespace api.Controllers
             _delete = new AppointmentDeleteService(_context);
             _listCarAvailable = new ListAppointmentByPeriod(_context);
             _userListAppointment = new ListAppointmentClientsService(_context);
+            _simulate = new AppointmentSimulateService(_context, _contextCar);
         }
 
         [HttpGet]
@@ -110,51 +112,11 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        [Route("/appointments/simulator")]
-        [Authorize(Roles = "Operator")]
-        public async Task<IActionResult> Simulator([FromBody] AppointmentCreateView appointmentBody)
+        [Route("/appointments/simulator/{idCar}")]
+        [AllowAnonymous]
+        public async Task<AppointmentCreateView> Simulator([Required] DateTime initialDate, [Required] DateTime finalDate, int idCar)
         {
-            try
-            {
-                var path = Startup.ContentRoot;
-                var pdfUrl = await _save.Execute(EntityBuilder.Call<Appointment>(appointmentBody), path, true);
-                return StatusCode(201, pdfUrl);
-            }
-            catch (NotFoundRegisterException err)
-            {
-                return StatusCode(404, new
-                {
-                    Message = err.Message
-                });
-            }
-            catch (CarNotAvalabityException err)
-            {
-                return StatusCode(401, new
-                {
-                    Message = err.Message
-                });
-            }
-            catch (ClientNotAvalabityException err)
-            {
-                return StatusCode(401, new
-                {
-                    Message = err.Message
-                });
-            }
-            catch (DateTimeColectedInvalidException err)
-            {
-                return StatusCode(401, new
-                {
-                    Message = err.Message
-                });
-            }
-            catch (ValuesInvalidException err)
-            {
-                return StatusCode(401, new
-                {
-                    Message = err.Message
-                });
-            }
+          return await _simulate.Execute(idCar, initialDate, finalDate);
         }
 
         [HttpGet]

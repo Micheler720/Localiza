@@ -32,7 +32,7 @@ namespace Domain.UseCase.AppointmentService
             _servicePDF = servicePDF;
         }
 
-        public async Task<string> Execute(Appointment appointment, string path, bool simulate = false)
+        public async Task<string> Execute(Appointment appointment, string path )
         {
             if(appointment.HourPrice <= 0 ) throw new ValuesInvalidException("Valor de hora por locação invalido. Verifique!");
             if(appointment.HourLocation <= 0 ) throw new ValuesInvalidException("Quantidade de horas locadas invalido. Verifique!");
@@ -73,15 +73,9 @@ namespace Domain.UseCase.AppointmentService
                 appointment.DateTimeDelivery = null;
                 appointment.Schedule = DateTime.Now;
                 
-                if(!simulate)
-                {
-                    await _repository.Add(appointment);
-                    pdf = LeaseAgreementToPDF.Writer(appointment);
-                }
-                else
-                {
-                    pdf = LeaseSimulateAgreementToPDF.Writer(appointment);
-                }
+                await _repository.Add(appointment);
+                pdf = LeaseAgreementToPDF.Writer(appointment);
+                
 
                 return _servicePDF.Build(path, pdf);
             }

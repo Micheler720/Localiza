@@ -66,22 +66,7 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.Appointmen
         {
             List<DbParameter> parameters = new List<DbParameter>();
             parameters.Add(new SqlParameter("@cpf", cpf));
-            var queryString = $"SELECT a.Id as Id, " +
-                $" a.Schedule as Schedule, " +
-                $" b.Name as NameClient, " +
-                $" c.Board as Board, " +
-                $" d.Name as Category, " +
-                $" a.Amount as Subtotal, " +
-                $" a.HourPrice, " +
-                $" a.HourLocation, " +
-                $" a.AdditionalCosts," +
-                $" a.DateTimeCollected as AppointmentCollected, " +
-                $" a.DateTimeDelivery as AppointmentDelivery " +
-                $" FROM appointments a " +
-                $" inner join clients b on a.IdClient = b.Id " +
-                $" inner join cars c on c.Id = a.IdCar " +
-                $" inner join car_categories d on d.Id = c.IdCategory" +
-                $" where b.Cpf = @cpf;";
+            var queryString = $"Exec clients_appointments_cpf @cpf ;";
             List<ClientAppointmentView> appointments = await FindList<ClientAppointmentView>(queryString, parameters);
             return appointments;
         }
