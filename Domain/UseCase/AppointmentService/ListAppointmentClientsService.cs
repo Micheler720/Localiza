@@ -22,7 +22,12 @@ namespace Domain.UseCase.UserServices
         public async Task<List<ClientAppointmentView>> Execute(string cpf)
         {
             if (cpf == null) throw new ParameterNotFoundException("CPF não definido para busca.");
-            return await _repository.FindByAppointmentCpf(cpf);            
+            var appointments = await _repository.FindByAppointmentCpf(cpf);
+            return appointments.Select(appointment =>
+            {
+                appointment.Images =  appointment.Photos.Split(',');
+                return appointment;
+            }).ToList();            
 
         }
     }

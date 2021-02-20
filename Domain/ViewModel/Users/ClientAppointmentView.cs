@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Domain.ViewModel.Users
 {
@@ -10,6 +11,11 @@ namespace Domain.ViewModel.Users
         public DateTime Schedule { get; set; }
         public string NameClient { get; set; }
         public string Board { get; set; }
+
+        [JsonIgnore]
+        public string Photos { get; set; }
+
+        public string[] Images { get; set; }
         public string Category { get; set; }
         public Double HourPrice { get; set; }
         public int HourLocation { get; set; }

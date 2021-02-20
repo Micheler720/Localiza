@@ -54,7 +54,8 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.Appointmen
                 " c.board as Board," +
                 " a.Amount as Amount," +
                 " a.DateTimeCollected as AppointmentCollected," +
-                " a.DateTimeDelivery as AppointmentDelivery" +
+                " a.DateTimeDelivery as AppointmentDelivery, " +
+                " c.Photos as Photos " +
                 " FROM appointments a " +
                 " inner join clients b on b.id = a.idclient " +
                 " inner join cars c on c.Id  = a.idCar " +

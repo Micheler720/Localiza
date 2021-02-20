@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Domain.ViewModel.Appointments
 {
@@ -10,6 +11,9 @@ namespace Domain.ViewModel.Appointments
         public DateTime DateTimeExpectedCollected { get; set; }
         
         public DateTime DateTimeCollected { get; set; }
+        [JsonIgnore]
+        public string Photos { get; set; }
+        public string[] Images { get; set; }
 
         [Required]
         public DateTime DateTimeExpectedDelivery { get; set; }        

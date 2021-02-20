@@ -37,6 +37,7 @@ namespace Infra.Database.Implementations.SQLServerDriver.Repositories.CarsReposi
                 "f.Name as Model," +
                 "f.Name as Model, " +
                 "b.Photos as Photos," +
+                "b.Name as Name, " +
                 "appointments.DateTimeExpectedCollected as DateTimeExpectedNextCollected" +
                 " FROM cars b " +
                 " left join appointments on b.id = appointments.idCar" +

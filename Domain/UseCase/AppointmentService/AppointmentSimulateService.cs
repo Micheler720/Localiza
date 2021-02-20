@@ -35,7 +35,8 @@ namespace Domain.UseCase.AppointmentService
                 HourLocation = (int)hours,
                 Subtotal = hours * car.HourPrice,
                 IdCar = car.Id,
-                HourPrice = car.HourPrice
+                HourPrice = car.HourPrice,
+                Images = car.Photos.Split(',')
             };
 
 
