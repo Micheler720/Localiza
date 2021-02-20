@@ -1,3 +1,4 @@
+using Domain.Entities.Roles;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,6 +8,15 @@ namespace Domain.ViewModel.Cars
 {
     public class CarSaveView
     {
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public CarExchange Exchange { get; set; }
+
+        [Required]
+        public int HP { get; set; }
+
         [Required]
         public string Board { get; set; }
         [Required]

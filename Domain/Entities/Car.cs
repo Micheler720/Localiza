@@ -1,3 +1,4 @@
+using Domain.Entities.Roles;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,6 +18,19 @@ namespace Domain.Entities
         [Column]
         [MaxLength(8)]
         public string Board { get; set; }
+
+
+        [Required]
+        [Column]
+        public string Name { get; set; }
+
+        [Required]
+        [Column]
+        public CarExchange Exchange { get; set; }
+
+        [Required]
+        [Column]
+        public int HP { get; set; }
 
         [Required]
         [Column]
